@@ -94,3 +94,4 @@ if __name__ == '__main__':
     TARGETPATH = getTargetPath(ABSPATH)
     PHONELIST = getPhonelist(ABSPATH)
     doCount(TARGET_NUMBER, PHONELIST, TARGETPATH, ABSPATH, DIRNUMBERS)
+    input('Press Enter')
