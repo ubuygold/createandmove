@@ -1,0 +1,3 @@
+/Users/edz/Documents/createandmove/target/target1
+/Users/edz/Documents/createandmove/target/target2
+/Users/edz/Documents/createandmove/target/target3

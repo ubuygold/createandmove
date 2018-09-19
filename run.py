@@ -4,8 +4,8 @@ import os
 import shutil
 
 ABSPATH = os.path.abspath('.')  # 获取当前的绝对地址
-TARGETPATH = ['C:/Users/ubuyg/Documents/jiaobenlaren/target/target1', 'C:/Users/ubuyg/Documents/jiaobenlaren/target/target2', 'C:/Users/ubuyg/Documents/jiaobenlaren/target/target3']  # 目标地址，存放模拟器中电报文件夹的位置，以列表形式存放
-TARGETPATH.sort()
+# TARGETPATH = ['C:/Users/ubuyg/Documents/jiaobenlaren/target/target1', 'C:/Users/ubuyg/Documents/jiaobenlaren/target/target2', 'C:/Users/ubuyg/Documents/jiaobenlaren/target/target3']  # 目标地址，存放模拟器中电报文件夹的位置，以列表形式存放
+# TARGETPATH.sort()
 TARGET_NUMBER = 10  # 每个模拟器文件夹存放的电报文件夹个数
 DIRNUMBERS = 3  # 指定目标文件夹数量，通常是将打开的模拟器的数量 
 
@@ -41,6 +41,20 @@ def fileExist(path):
         pass
 
 
+def getTargetPath(abspath):
+    '''从文本文件中获取目标文件夹'''
+    targetDir = []
+    if os.path.exists(os.path.join(abspath, 'targetPath.txt')) != True:
+        with open (os.path.join(abspath, 'targetPath.txt'), 'a') as f:
+            f.write('')
+    else:
+        with open (os.path.join(abspath, 'targetPath.txt'), 'r') as r:
+            for line in r.readlines():
+                targetDir.append(line.strip())
+    targetDir.sort()
+    return targetDir
+            
+                
 def doCopyAndMove(phonelist, abspath):
     '''从电报文件夹列表中获取一个，并将该文件夹存放到临时文件夹和归档文件夹，并在临时文件夹中创建文本文件记录'''
     DIRNAME = phonelist.pop()
@@ -77,5 +91,6 @@ def doCount(targetNumber, phonelist, targetpath, abspath, dirNumbers):
 
 if __name__ == '__main__':
     makeDir(ABSPATH)
+    TARGETPATH = getTargetPath(ABSPATH)
     PHONELIST = getPhonelist(ABSPATH)
     doCount(TARGET_NUMBER, PHONELIST, TARGETPATH, ABSPATH, DIRNUMBERS)
