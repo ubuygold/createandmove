@@ -39,6 +39,11 @@ def fileExist(path):
         os.mkdir(path)
     else: 
         os.makedirs(path)
+
+
+def clearDir(path):
+    for line in path:
+        fileExist(line)
   
 def getTargetPath(abspath):
     '''从文本文件中获取目标文件夹'''
@@ -92,7 +97,6 @@ if __name__ == '__main__':
     makeDir(ABSPATH)
     TARGETPATH = getTargetPath(ABSPATH)
     PHONELIST = getPhonelist(ABSPATH)
-    for line in TARGETPATH:
-        fileExist(line)
+    clearDir(TARGETPATH)
     doCount(TARGET_NUMBER, PHONELIST, TARGETPATH, ABSPATH, DIRNUMBERS)
     input('Press Enter')
