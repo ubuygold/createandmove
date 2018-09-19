@@ -1,30 +1,36 @@
 #coding=utf-8
+#!/usr/bin/env python
 import os
 import shutil
 
 ABSPATH = os.path.abspath('.')  # 获取当前的绝对地址
-# 目标地址，存放模拟器中电报文件夹的位置，以列表形式存放
-TARGETPATH = ['C:/Users/ubuyg/Documents/jiaobenlaren/target/target1','C:/Users/ubuyg/Documents/jiaobenlaren/target/target2','C:/Users/ubuyg/Documents/jiaobenlaren/target/target3'] 
-TARGETPATH.sort() 
-TARGET_NUMBER = 10 # 每个模拟器文件夹存放的电报文件夹个数 
-DIRNUMBERS = 3 #指定目标文件夹数量，通常是将打开的模拟器的数量 
-PHONELIST = os.listdir(os.path.join(ABSPATH, 'source'))
-PHONELIST.sort() 
+TARGETPATH = ['C:/Users/ubuyg/Documents/jiaobenlaren/target/target1', 'C:/Users/ubuyg/Documents/jiaobenlaren/target/target2', 'C:/Users/ubuyg/Documents/jiaobenlaren/target/target3']  # 目标地址，存放模拟器中电报文件夹的位置，以列表形式存放
+TARGETPATH.sort()
+TARGET_NUMBER = 10  # 每个模拟器文件夹存放的电报文件夹个数
+DIRNUMBERS = 3  # 指定目标文件夹数量，通常是将打开的模拟器的数量 
+
+
+def getPhonelist(abspath):
+    PHONELIST = os.listdir(os.path.join(abspath, 'source'))
+    PHONELIST.sort()
+    return PHONELIST
+
 
 def makeDir(abspath):
     '''若源文件夹、归档文件夹和临时文件夹不存在，则创建'''
     if os.path.exists(os.path.join(ABSPATH, 'source')):
         pass
     else:
-        os.mkdir(os.path.join(ABSPATH, 'source'))
-    if os.path.exists(os.path.join(ABSPATH, 'file')):
+        os.mkdir(os.path.join(abspath, 'source'))
+    if os.path.exists(os.path.join(abspath, 'file')):
         pass
     else:
-        os.mkdir(os.path.join(ABSPATH, 'file'))
-    if os.path.exists(os.path.join(ABSPATH, 'current')):
+        os.mkdir(os.path.join(abspath, 'file'))
+    if os.path.exists(os.path.join(abspath, 'current')):
         pass
     else:
-        os.mkdir(os.path.join(ABSPATH, 'current'))
+        os.mkdir(os.path.join(abspath, 'current'))
+
 
 def fileExist(path):
     '''检测目标文件夹是否为空，不为空则清空'''
@@ -33,6 +39,7 @@ def fileExist(path):
         os.mkdir(path)
     else:
         pass
+
 
 def doCopyAndMove(phonelist, abspath):
     '''从电报文件夹列表中获取一个，并将该文件夹存放到临时文件夹和归档文件夹，并在临时文件夹中创建文本文件记录'''
@@ -60,7 +67,7 @@ def doCount(targetNumber, phonelist, targetpath, abspath, dirNumbers):
     '''将指定数量的目标文件夹内移动指定的电报文件夹'''
     for i in range(dirNumbers):
         if len(phonelist) >= targetNumber:
-            for i in range(targetNumber):
+            for numbers in range(targetNumber):
                 doCopyAndMove(phonelist, abspath)
             doMoveToTarDirs(targetpath, abspath)
         else:
@@ -70,4 +77,5 @@ def doCount(targetNumber, phonelist, targetpath, abspath, dirNumbers):
 
 if __name__ == '__main__':
     makeDir(ABSPATH)
+    PHONELIST = getPhonelist(ABSPATH)
     doCount(TARGET_NUMBER, PHONELIST, TARGETPATH, ABSPATH, DIRNUMBERS)
