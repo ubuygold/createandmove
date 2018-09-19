@@ -34,7 +34,9 @@ def makeDir(abspath):
 
 def fileExist(path):
     '''检测目标文件夹是否为空，不为空则清空'''
-    if os.listdir(path) != []:
+    if os.path.exists(path) = False:
+        os.mkdir(path)
+    elif os.listdir(path) != []:
         shutil.rmtree(path)
         os.mkdir(path)
     else:
